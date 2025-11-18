@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Wedding Checklist</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f7fb;
+      margin: 0;
+      padding: 0;
+      color: #222;
+    }
+    header {
+      background: #5a6fd1;
+      color: #fff;
+      padding: 1rem 1.5rem;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.6rem;
+    }
+    header p {
+      margin: 0.2rem 0 0;
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+    .container {
+      max-width: 900px;
+      margin: 1.5rem auto;
+      padding: 0 1rem 2rem;
+    }
+    .section {
+      background: #fff;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .section h2 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 0.4rem;
+    }
+    .field {
+      margin-bottom: 0.75rem;
+    }
+    .field label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      font-size: 0.95rem;
+    }
+    .field small {
+      display: block;
+      font-size: 0.78rem;
+      color: #666;
+      margin-bottom: 0.25rem;
+    }
+    input[type="text"],
+    input[type="date"],
+    input[type="time"],
+    input[type="number"],
+    textarea {
+      width: 100%;
+      padding: 0.45rem 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 0.9rem;
+      box-sizing: border-box;
+    }
+    textarea {
+      min-height: 60px;
+      resize: vertical;
+    }
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.3rem;
+      font-size: 0.9rem;
+    }
+    .buttons {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+    button {
+      border: none;
+      border-radius: 4px;
+      padding: 0.6rem 1rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    button.primary {
+      background: #5a6fd1;
+      color: #fff;
+    }
+    button.secondary {
+      background: #e0e0e0;
+      color: #222;
+    }
+    #result {
+      white-space: pre-wrap;
+      font-size: 0.85rem;
+      background: #111;
+      color: #eee;
+      padding: 0.75rem;
+      border-radius: 6px;
+      margin-top: 1rem;
+      display: none;
+      max-height: 300px;
+      overflow: auto;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Wedding Checklist</h1>
+  <p>Please fill in the details as completely as possible.</p>
+</header>
+
+<div class="container">
+  <form id="weddingForm">
+    <!-- Wedding Details -->
+    <div class="section">
+      <h2>Wedding Details</h2>
+      <div class="field">
+        <label for="dateOfFunction">Date of Function</label>
+        <input type="date" id="dateOfFunction" name="dateOfFunction" />
+      </div>
+      <div class="field">
+        <label for="typeOfFunction">Type of Function</label>
+        <input type="text" id="typeOfFunction" name="typeOfFunction" placeholder="Wedding / Engagement / etc." />
+      </div>
+      <div class="field">
+        <label for="bridesName">Bride's Name</label>
+        <input type="text" id="bridesName" name="bridesName" />
+      </div>
+      <div class="field">
+        <label for="groomsName">Groom's Name</label>
+        <input type="text" id="groomsName" name="groomsName" />
+      </div>
+      <div class="field">
+        <label for="numberOfGuests">Number of Guests (approx.)</label>
+        <input type="number" id="numberOfGuests" name="numberOfGuests" min="0" />
+      </div>
+    </div>
+
+    <!-- Service Providers -->
+    <div class="section">
+      <h2>Service Providers</h2>
+      <div class="field">
+        <label for="photographer">Photographer</label>
+        <input type="text" id="photographer" name="photographer" />
+      </div>
+      <div class="field">
+        <label for="videographer">Videographer</label>
+        <input type="text" id="videographer" name="videographer" />
+      </div>
+      <div class="field">
+        <label for="musiciansChupah">Musicians at Chupah</label>
+        <textarea id="musiciansChupah" name="musiciansChupah"></textarea>
+      </div>
+      <div class="field">
+        <label for="musiciansReception">Musicians at Reception</label>
+        <textarea id="musiciansReception" name="musiciansReception"></textarea>
+      </div>
+      <div class="field">
+        <label for="caterers">Caterers</label>
+        <input type="text" id="caterers" name="caterers" />
+      </div>
+    </div>
+
+    <!-- Chupah Details -->
+    <div class="section">
+      <h2>Chupah Details</h2>
+      <div class="field">
+        <label for="timeOfChupah">Time of Chupah</label>
+        <input type="time" id="timeOfChupah" name="timeOfChupah" />
+      </div>
+      <div class="field">
+        <label for="venueOfChupah">Venue of Chupah</label>
+        <input type="text" id="venueOfChupah" name="venueOfChupah" />
+      </div>
+      <div class="field">
+        <label for="rabbiOfficiating">Rabbi Officiating</label>
+        <input type="text" id="rabbiOfficiating" name="rabbiOfficiating" />
+      </div>
+
+      <div class="field">
+        <label>Songs at Chupah</label>
+        <small>Song order</small>
+        <label for="song1">Song 1 – Groomsmen & Groom</label>
+        <input type="text" id="song1" name="song1" />
+        <label for="song2">Song 2 – Bridesmaids</label>
+        <input type="text" id="song2" name="song2" />
+        <label for="song3">Song 3 – Bride</label>
+        <input type="text" id="song3" name="song3" />
+        <label for="song4">Song 4 – Bride walks around Groom</label>
+        <input type="text" id="song4" name="song4" />
+        <label for="song5">Song 5 – Song for Israel</label>
+        <input type="text" id="song5" name="song5" />
+        <label for="song6">Song 6 – Before breaking of the glass</label>
+        <input type="text" id="song6" name="song6" />
+        <label for="song7">Song 7 – After breaking of the glass</label>
+        <input type="text" id="song7" name="song7" />
+      </div>
+
+      <div class="field">
+        <label>Sheva Brochos (under the Chupah)</label>
+        <label for="sheva1">Sheva Brocha 1</label>
+        <input type="text" id="sheva1" name="sheva1" placeholder="Who is reciting / notes" />
+        <label for="sheva2">Sheva Brocha 2</label>
+        <input type="text" id="sheva2" name="sheva2" />
+        <label for="sheva3">Sheva Brocha 3</label>
+        <input type="text" id="sheva3" name="sheva3" />
+        <label for="sheva4">Sheva Brocha 4</label>
+        <input type="text" id="sheva4" name="sheva4" />
+        <label for="sheva5">Sheva Brocha 5</label>
+        <input type="text" id="sheva5" name="sheva5" />
+        <label for="sheva6">Sheva Brocha 6</label>
+        <input type="text" id="sheva6" name="sheva6" />
+        <label for="sheva7">Sheva Brocha 7</label>
+        <input type="text" id="sheva7" name="sheva7" />
+      </div>
+    </div>
+
+    <!-- Things to Remember (Chupah) -->
+    <div class="section">
+      <h2>Things to Remember – Chupah</h2>
+      <div class="checkbox-row">
+        <input type="checkbox" id="ketubah1" name="ketubah1" />
+        <label for="ketubah1">Have you got the Ketubah?</label>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="wineGlass" name="wineGlass" />
+        <label for="wineGlass">Have you got the wine glass?</label>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="wine" name="wine" />
+        <label for="wine">Have you got the wine?</label>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="ketubah2" name="ketubah2" />
+        <label for="ketubah2">Have you got the Ketubah (signed & ready)?</label>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="bouquet" name="bouquet" />
+        <label for="bouquet">Have you got the bouquet?</label>
+      </div>
+    </div>
+
+    <!-- Reception Details -->
+    <div class="section">
+      <h2>Reception</h2>
+      <div class="field">
+        <label for="timeOnInvitation">Time on Invitation</label>
+        <input type="time" id="timeOnInvitation" name="timeOnInvitation" />
+      </div>
+      <div class="field">
+        <label for="venueReception">Venue of Reception</label>
+        <input type="text" id="venueReception" name="venueReception" />
+      </div>
+      <div class="field">
+        <label for="catererReception">Caterer</label>
+        <input type="text" id="catererReception" name="catererReception" />
+      </div>
+      <div class="field">
+        <label for="mc">Master of Ceremony (MC)</label>
+        <input type="text" id="mc" name="mc" />
+      </div>
+    </div>
+
+    <!-- Procedure -->
+    <div class="section">
+      <h2>Procedure at Reception</h2>
+      <div class="field">
+        <label for="predrinksVenue">Predrinks Venue</label>
+        <input type="text" id="predrinksVenue" name="predrinksVenue" />
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="predrinksMusician" name="predrinksMusician" />
+        <label for="predrinksMusician">Have you booked a musician for predrinks?</label>
+      </div>
+
+      <div class="field">
+        <label for="openingHora">Opening Hora Set (details)</label>
+        <textarea id="openingHora" name="openingHora"></textarea>
+      </div>
+
+      <div class="field">
+        <label>MC Flow</label>
+        <small>You can fill in names and notes</small>
+        <label for="mcToMic">MC to microphone (notes)</label>
+        <textarea id="mcToMic" name="mcToMic"></textarea>
+
+        <label for="mcWelcomes">MC welcomes</label>
+        <textarea id="mcWelcomes" name="mcWelcomes"></textarea>
+
+        <label for="hamotziPerson">Who is doing Hamotzi?</label>
+        <input type="text" id="hamotziPerson" name="hamotziPerson" />
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="waterForVassing" name="waterForVassing" />
+          <label for="waterForVassing">Have you remembered water for vassing?</label>
+        </div>
+        <div class="checkbox-row">
+          <input type="checkbox" id="challah" name="challah" />
+          <label for="challah">Have you remembered challah?</label>
+        </div>
+
+        <label for="speechOrder">Speech order (MC calls on someone to make speech)</label>
+        <textarea id="speechOrder" name="speechOrder"></textarea>
+
+        <label for="groomResponds">Groom’s response notes</label>
+        <textarea id="groomResponds" name="groomResponds"></textarea>
+
+        <label for="secondHora">Second shorter hora set</label>
+        <textarea id="secondHora" name="secondHora"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="mainCourseDetails">Main course</label>
+        <textarea id="mainCourseDetails" name="mainCourseDetails"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="bensching">Bensching</label>
+        <textarea id="bensching" name="bensching"></textarea>
+      </div>
+      <div class="field">
+        <label for="benschingWho">Who is Bensching?</label>
+        <input type="text" id="benschingWho" name="benschingWho" />
+      </div>
+
+      <div class="field">
+        <label>Sheva Brochos (at Bensching)</label>
+        <label for="receptionSheva1">Sheva Brocha 1</label>
+        <input type="text" id="receptionSheva1" name="receptionSheva1" />
+        <label for="receptionSheva2">Sheva Brocha 2</label>
+        <input type="text" id="receptionSheva2" name="receptionSheva2" />
+        <label for="receptionSheva3">Sheva Brocha 3</label>
+        <input type="text" id="receptionSheva3" name="receptionSheva3" />
+        <label for="receptionSheva4">Sheva Brocha 4</label>
+        <input type="text" id="receptionSheva4" name="receptionSheva4" />
+        <label for="receptionSheva5">Sheva Brocha 5</label>
+        <input type="text" id="receptionSheva5" name="receptionSheva5" />
+        <label for="receptionSheva6">Sheva Brocha 6</label>
+        <input type="text" id="receptionSheva6" name="receptionSheva6" />
+        <label for="receptionSheva7">Sheva Brocha 7</label>
+        <input type="text" id="receptionSheva7" name="receptionSheva7" />
+      </div>
+    </div>
+
+    <!-- Things to Remember – Reception -->
+    <div class="section">
+      <h2>Things to Remember – Reception</h2>
+      <div class="checkbox-row">
+        <input type="checkbox" id="smallTable" name="smallTable" />
+        <label for="smallTable">Small table on dance floor</label>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="threeChairs" name="threeChairs" />
+        <label for="threeChairs">Three chairs at table</label>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="wineAndGlasses" name="wineAndGlasses" />
+        <label for="wineAndGlasses">Wine and three glasses</label>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="benschingCards" name="benschingCards" />
+        <label for="benschingCards">Bensching cards</label>
+      </div>
+    </div>
+
+    <!-- First Dance -->
+    <div class="section">
+      <h2>First Dance</h2>
+      <div class="checkbox-row">
+        <input type="checkbox" id="sentDjSong" name="sentDjSong" />
+        <label for="sentDjSong">Have you sent the DJ the song?</label>
+      </div>
+      <div class="field">
+        <label for="djCallFamily">When can DJ call family and guests onto the floor?</label>
+        <input type="text" id="djCallFamily" name="djCallFamily" />
+      </div>
+      <div class="field">
+        <label for="djDanceMusic">DJ plays popular wedding dance music (notes / preferences)</label>
+        <textarea id="djDanceMusic" name="djDanceMusic"></textarea>
+      </div>
+      <div class="field">
+        <label for="playlistType">Are you sending an iTunes or Spotify playlist?</label>
+        <input type="text" id="playlistType" name="playlistType" placeholder="iTunes / Spotify / Other" />
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="playlistDeadline" name="playlistDeadline" />
+        <label for="playlistDeadline">Playlist must be sent no less than 7 days before the event</label>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="trustDj" name="trustDj" />
+        <label for="trustDj">Do you trust the DJ to use their discretion?</label>
+      </div>
+      <div class="field">
+        <label for="dessertDetails">Dessert is served (timing / notes)</label>
+        <textarea id="dessertDetails" name="dessertDetails"></textarea>
+      </div>
+      <div class="field">
+        <label for="dancingTillEnd">Dancing till end (any special instructions)</label>
+        <textarea id="dancingTillEnd" name="dancingTillEnd"></textarea>
+      </div>
+    </div>
+
+    <!-- Final Things to Remember -->
+    <div class="section">
+      <h2>Final Things to Remember</h2>
+      <div class="checkbox-row">
+        <input type="checkbox" id="garterBouquet" name="garterBouquet" />
+        <label for="garterBouquet">Garter and bouquet</label>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="weddingCake" name="weddingCake" />
+        <label for="weddingCake">Wedding cake</label>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="giftBoxes" name="giftBoxes" />
+        <label for="giftBoxes">Boxes to put presents in</label>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="buttons">
+      <button type="submit" class="primary">Show My Answers (JSON)</button>
+      <button type="button" class="secondary" onclick="window.print()">Print Checklist</button>
+    </div>
+
+    <div id="result"></div>
+  </form>
+</div>
+
+<script>
+  const form = document.getElementById('weddingForm');
+  const result = document.getElementById('result');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const data = {};
+
+    for (const [key, value] of formData.entries()) {
+      if (data[key] !== undefined) {
+        // handle duplicates by turning into an array
+        if (!Array.isArray(data[key])) data[key] = [data[key]];
+        data[key].push(value);
+      } else {
+        data[key] = value;
+      }
+    }
+
+    // include checkboxes explicitly as true/false
+    const inputs = form.querySelectorAll('input[type="checkbox"]');
+    inputs.forEach(input => {
+      data[input.name] = input.checked;
+    });
+
+    result.style.display = 'block';
+    result.textContent = JSON.stringify(data, null, 2);
+  });
+</script>
+</body>
+</html>
